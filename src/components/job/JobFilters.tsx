@@ -63,7 +63,7 @@ export function JobFiltersComponent({ filters, onFiltersChange, availableTags }:
         </div>
 
         {/* Job Type */}
-        <Select value={filters.jobType} onValueChange={(value) => updateFilter('jobType', value)}>
+        <Select value={filters.jobType || "all"} onValueChange={(value) => updateFilter('jobType', value === "all" ? "" : value)}>
           <SelectTrigger>
             <div className="flex items-center">
               <Briefcase className="h-4 w-4 mr-2 text-gray-400" />
@@ -71,7 +71,7 @@ export function JobFiltersComponent({ filters, onFiltersChange, availableTags }:
             </div>
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Types</SelectItem>
+            <SelectItem value="all">All Types</SelectItem>
             <SelectItem value="full-time">Full Time</SelectItem>
             <SelectItem value="part-time">Part Time</SelectItem>
             <SelectItem value="contract">Contract</SelectItem>
@@ -81,8 +81,8 @@ export function JobFiltersComponent({ filters, onFiltersChange, availableTags }:
 
         {/* Salary Range */}
         <Select 
-          value={filters.salaryMin === 0 ? '' : filters.salaryMin.toString()} 
-          onValueChange={(value) => updateFilter('salaryMin', value ? parseInt(value) : 0)}
+          value={filters.salaryMin === 0 ? 'any' : filters.salaryMin.toString()} 
+          onValueChange={(value) => updateFilter('salaryMin', value === 'any' ? 0 : parseInt(value))}
         >
           <SelectTrigger>
             <div className="flex items-center">
@@ -91,7 +91,7 @@ export function JobFiltersComponent({ filters, onFiltersChange, availableTags }:
             </div>
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Any Salary</SelectItem>
+            <SelectItem value="any">Any Salary</SelectItem>
             <SelectItem value="30000">$30,000+</SelectItem>
             <SelectItem value="50000">$50,000+</SelectItem>
             <SelectItem value="70000">$70,000+</SelectItem>
